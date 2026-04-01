@@ -8,13 +8,13 @@ spring:
         - id: user-service-route
           uri: http://localhost:8081
           predicates:
-            - Path=/api/**
+            - Path=/api/users/**
           filters:
-            - RewritePath=/api/(?<segment>.*), /${segment}
+            - RewritePath=/api/users/?(?<segment>.*), /users${segment}
             - name: CircuitBreaker
               args:
-                name: testCB
-                fallbackUri: forward:/fallback/test
+                name: userServiceCB
+                fallbackUri: forward:/fallback
             - name: Retry
               args:
                 retries: 2
