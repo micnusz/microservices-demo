@@ -1,33 +1,43 @@
 package com.micnusz.sbag.Controller;
 
-import com.micnusz.sbag.Model.ErrorResponse;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.server.ServerHttpRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Mono;
 
 import java.time.Instant;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/fallback")
 public class FallbackController {
 
-    @GetMapping
-    public ResponseEntity<ErrorResponse> fallback(ServerHttpRequest request) {
+    private static final Logger log = LoggerFactory.getLogger(FallbackController.class);
 
-        String originalPath = request.getHeaders()
-                .getFirst("X-Original-Request-Url");
+    @GetMapping("/fallback/user")
+    public Mono<Map<String, Object>> userFallback(ServerWebExchange exchange) {
+        log.warn("User service fallback triggered for path: {}", exchange.getRequest().getPath());
 
-        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
-                .body(new ErrorResponse(
-                        Instant.now(),
-                        503,
-                        "USER_SERVICE_UNAVAILABLE",
-                        "User service is temporarily unavailable",
-                        originalPath != null ? originalPath : request.getURI().getPath()
-                ));
+        return Mono.just(Map.of(
+                "timestamp", Instant.now().toString(),
+                "status", 503,
+                "error", "Service Unavailable",
+                "message", "User service is temporarily unavailable. Please try again later.",
+                "path", exchange.getRequest().getPath().toString()
+        ));
+    }
+
+    @GetMapping("/fallback/order")
+    public Mono<Map<String, Object>> orderFallback(ServerWebExchange exchange) {
+        log.warn("Order service fallback triggered for path: {}", exchange.getRequest().getPath());
+
+        return Mono.just(Map.of(
+                "timestamp", Instant.now().toString(),
+                "status", 503,
+                "error", "Service Unavailable",
+                "message", "Order service is temporarily unavailable. Please try again later.",
+                "path", exchange.getRequest().getPath().toString()
+        ));
     }
 }

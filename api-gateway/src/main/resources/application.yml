@@ -5,7 +5,6 @@ spring:
   cloud:
     gateway:
       routes:
-
         - id: user-service-route
           uri: http://localhost:8081
           predicates:
@@ -15,11 +14,12 @@ spring:
             - name: CircuitBreaker
               args:
                 name: userServiceCB
-                fallbackUri: forward:/fallback
+                fallbackUri: forward:/fallback/user
             - name: Retry
               args:
                 retries: 2
-                statuses: BAD_GATEWAY,SERVICE_UNAVAILABLE,INTERNAL_SERVER_ERROR
+                statuses: SERVICE_UNAVAILABLE, BAD_GATEWAY
+                methods: GET
 
         - id: order-service-route
           uri: http://localhost:8082
@@ -27,9 +27,48 @@ spring:
             - Path=/api/orders/**
           filters:
             - RewritePath=/api/orders/?(?<segment>.*), /orders/${segment}
+            - name: CircuitBreaker
+              args:
+                name: orderServiceCB
+                fallbackUri: forward:/fallback/order
+            - name: Retry
+              args:
+                retries: 2
+                statuses: SERVICE_UNAVAILABLE, BAD_GATEWAY
+                methods: GET
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 40
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+    instances:
+      userServiceCB:
+        baseConfig: default
+      orderServiceCB:
+        baseConfig: default
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, prometheus
+  endpoint:
+    health:
+      show-details: always
+  prometheus:
+    metrics:
+      export:
+        enabled: true
 
 logging:
   level:
-    org.springframework.cloud.gateway: DEBUG
-    reactor.netty: DEBUG
+    org.springframework.cloud.gateway: INFO
     io.github.resilience4j: DEBUG
+    com.micnusz.sbag: DEBUG
