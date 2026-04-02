@@ -1,2 +1,14 @@
-com/micnusz/orderService/Model/Order.class
 com/micnusz/orderService/OrderServiceApplication.class
+com/micnusz/orderService/Client/UserClient.class
+com/micnusz/orderService/Model/OrderResponse.class
+com/micnusz/orderService/Model/UserResponse.class
+com/micnusz/orderService/Controller/OrderController.class
+com/micnusz/orderService/Error/UserErrorDecoder.class
+com/micnusz/orderService/Handler/GlobalExceptionHandler.class
+com/micnusz/orderService/Exception/UserServiceUnavailableException.class
+com/micnusz/orderService/Config/ResilienceLoggingConfig.class
+com/micnusz/orderService/Service/UserIntegrationService.class
+com/micnusz/orderService/Service/OrderService.class
+com/micnusz/orderService/Model/Order.class
+com/micnusz/orderService/Model/UserRef.class
+com/micnusz/orderService/Exception/UserNotFoundException.class

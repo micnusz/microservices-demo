@@ -4,7 +4,6 @@ server:
 spring:
   application:
     name: order-service
-
   cloud:
     openfeign:
       client:
@@ -14,6 +13,12 @@ spring:
             readTimeout: 2000
 
 resilience4j:
+  timelimiter:
+    instances:
+      userService:
+        timeoutDuration: 2500ms
+        cancelRunningFuture: true
+
   circuitbreaker:
     instances:
       userService:
@@ -25,25 +30,54 @@ resilience4j:
         automaticTransitionFromOpenToHalfOpenEnabled: true
         registerHealthIndicator: true
         eventConsumerBufferSize: 10
+        recordExceptions:
+          - feign.RetryableException
+          - java.net.SocketTimeoutException
+          - com.micnusz.orderService.Exception.UserServiceUnavailableException
+        ignoreExceptions:
+          - com.micnusz.orderService.Exception.UserNotFoundException
 
   retry:
     instances:
       userService:
-        eventConsumerBufferSize: 10
-        maxAttempts: 2
-        waitDuration: 300ms
+        maxAttempts: 3
+        waitDuration: 500ms
         retryExceptions:
           - feign.RetryableException
+          - java.net.SocketTimeoutException
+          - java.net.ConnectException
+          - com.micnusz.orderService.Exception.UserServiceUnavailableException
+        ignoreExceptions:
+          - com.micnusz.orderService.Exception.UserNotFoundException
+        eventConsumerBufferSize: 10
 
   bulkhead:
     instances:
       userService:
         maxConcurrentCalls: 10
-        maxWaitDuration: 0
+        maxWaitDuration: 50ms
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, circuitbreakerevents, retryevents, bulkheadevents
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+      probes:
+        enabled: true
+    circuitbreakerevents:
+      enabled: true
+    retryevents:
+      enabled: true
+    bulkheadevents:
+      enabled: true
 
 logging:
   level:
     com.micnusz.orderservice: DEBUG
     org.springframework.cloud.openfeign: DEBUG
     io.github.resilience4j: DEBUG
+    io.github.resilience4j.retry: TRACE

@@ -1,4 +1,14 @@
 /Users/michal/Documents/IntelliJ/microservices-demo/order-service/src/main/java/com/micnusz/orderService/Client/UserClient.java
+/Users/michal/Documents/IntelliJ/microservices-demo/order-service/src/main/java/com/micnusz/orderService/Config/ResilienceLoggingConfig.java
+/Users/michal/Documents/IntelliJ/microservices-demo/order-service/src/main/java/com/micnusz/orderService/Controller/OrderController.java
+/Users/michal/Documents/IntelliJ/microservices-demo/order-service/src/main/java/com/micnusz/orderService/Error/UserErrorDecoder.java
+/Users/michal/Documents/IntelliJ/microservices-demo/order-service/src/main/java/com/micnusz/orderService/Exception/UserNotFoundException.java
+/Users/michal/Documents/IntelliJ/microservices-demo/order-service/src/main/java/com/micnusz/orderService/Exception/UserServiceUnavailableException.java
+/Users/michal/Documents/IntelliJ/microservices-demo/order-service/src/main/java/com/micnusz/orderService/Handler/GlobalExceptionHandler.java
 /Users/michal/Documents/IntelliJ/microservices-demo/order-service/src/main/java/com/micnusz/orderService/Model/Order.java
+/Users/michal/Documents/IntelliJ/microservices-demo/order-service/src/main/java/com/micnusz/orderService/Model/OrderResponse.java
+/Users/michal/Documents/IntelliJ/microservices-demo/order-service/src/main/java/com/micnusz/orderService/Model/UserRef.java
+/Users/michal/Documents/IntelliJ/microservices-demo/order-service/src/main/java/com/micnusz/orderService/Model/UserResponse.java
 /Users/michal/Documents/IntelliJ/microservices-demo/order-service/src/main/java/com/micnusz/orderService/OrderServiceApplication.java
 /Users/michal/Documents/IntelliJ/microservices-demo/order-service/src/main/java/com/micnusz/orderService/Service/OrderService.java
+/Users/michal/Documents/IntelliJ/microservices-demo/order-service/src/main/java/com/micnusz/orderService/Service/UserIntegrationService.java
