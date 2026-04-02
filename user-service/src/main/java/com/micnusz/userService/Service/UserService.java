@@ -5,18 +5,26 @@ import com.micnusz.userService.Model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserService {
 
-    private final List<User> usersDataList = new ArrayList<>(List.of(
-            new User("Jan Kowalski", "jan.kowalski@email.com"),
-            new User("Anna Nowak", "anna.nowak@email.com"),
-            new User("Piotr Zielinski", "piotr.zielinski@email.com")
-    ));
+    private final Map<Long, User> users = new HashMap<>();
+
+    public UserService() {
+        users.put(1L, new User(1L, "Jan Kowalski", "jan@email.com"));
+        users.put(2L, new User(2L, "Anna Nowak", "anna@email.com"));
+        users.put(3L, new User(3L, "Piotr Zielinski", "piotr@email.com"));
+    }
 
     public List<User> getAllUsers() {
-        return usersDataList;
+        return new ArrayList<>(users.values());
+    }
+
+    public User getUserById(Long id) {
+        return users.get(id);
     }
 }

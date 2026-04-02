@@ -18,7 +18,7 @@ public class UserIntegrationService {
     }
 
     @Bulkhead(name = "userService")
-    @Retry(name = "userSErvice")
+    @Retry(name = "userService")
     @CircuitBreaker(name = "userService", fallbackMethod = "fallback")
     public UserRef getUser(Long id) {
 

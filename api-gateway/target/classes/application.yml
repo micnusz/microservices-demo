@@ -5,12 +5,13 @@ spring:
   cloud:
     gateway:
       routes:
+
         - id: user-service-route
           uri: http://localhost:8081
           predicates:
             - Path=/api/users/**
           filters:
-            - RewritePath=/api/users/?(?<segment>.*), /users${segment}
+            - RewritePath=/api/users/?(?<segment>.*), /users/${segment}
             - name: CircuitBreaker
               args:
                 name: userServiceCB
@@ -19,6 +20,13 @@ spring:
               args:
                 retries: 2
                 statuses: BAD_GATEWAY,SERVICE_UNAVAILABLE,INTERNAL_SERVER_ERROR
+
+        - id: order-service-route
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/orders/**
+          filters:
+            - RewritePath=/api/orders/?(?<segment>.*), /orders/${segment}
 
 logging:
   level:
