@@ -17,7 +17,7 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @GetMapping("/{orderId}/user/{userId}")
+    @GetMapping("/{orderId}/users/{userId}")
     public OrderResponse getOrder(@PathVariable Long orderId,
                                   @PathVariable Long userId) {
         return orderService.getOrder(orderId, userId);

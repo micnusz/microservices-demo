@@ -61,19 +61,30 @@ management:
   endpoints:
     web:
       exposure:
-        include: health, circuitbreakerevents, retryevents, bulkheadevents
+        include: health, prometheus, metrics, circuitbreakerevents, retryevents, bulkheadevents
   endpoint:
     health:
       show-details: always
       show-components: always
       probes:
         enabled: true
+    prometheus:
+      enabled: true
     circuitbreakerevents:
       enabled: true
     retryevents:
       enabled: true
     bulkheadevents:
       enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+      slo:
+        http.server.requests: 10ms, 50ms, 100ms, 200ms, 500ms, 1s, 2s
 
 logging:
   level:
