@@ -1,0 +1,4 @@
+com/micnusz/sbag/Model/ErrorResponse.class
+com/micnusz/sbag/Filter/RequestLoggingFilter.class
+com/micnusz/sbag/Controller/FallbackController.class
+com/micnusz/sbag/SbagApplication.class

@@ -1,0 +1,4 @@
+/Users/michal/Documents/IntelliJ/microservices-demo/api-gateway/src/main/java/com/micnusz/sbag/Controller/FallbackController.java
+/Users/michal/Documents/IntelliJ/microservices-demo/api-gateway/src/main/java/com/micnusz/sbag/Filter/RequestLoggingFilter.java
+/Users/michal/Documents/IntelliJ/microservices-demo/api-gateway/src/main/java/com/micnusz/sbag/Model/ErrorResponse.java
+/Users/michal/Documents/IntelliJ/microservices-demo/api-gateway/src/main/java/com/micnusz/sbag/SbagApplication.java
